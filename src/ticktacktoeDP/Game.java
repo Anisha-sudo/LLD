@@ -1,6 +1,9 @@
 package ticktacktoeDP;
 
 import java.util.Deque;
+import java.util.List;
+import java.util.Scanner;
+
 public class Game {
 
     Deque<Player> players;
@@ -30,7 +33,7 @@ public class Game {
 
             Player playerTurn = players.removeFirst();
 
-            List<Pair<Integer,Integer>>freeSpaces= board.getFreeCells();
+            List<Pair<Integer,Integer>> freeSpaces= board.getFreeCells();
             if(freeSpaces.isEmpty()){
                 noWinner=false;
                 continue;
@@ -61,6 +64,6 @@ public class Game {
     }
 
     boolean isThereWinner(int x,int y, Symbol symbol){
-        
+        return false;
     }
 }

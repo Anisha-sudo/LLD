@@ -1,5 +1,8 @@
 package ticktacktoeDP;
-import com.sun.tools.javac.util.Pair;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     int size;
@@ -17,10 +20,10 @@ public class Board {
         board[x][y]=symbol;
         return true;
     }
-    public List<Pair<Integer,Integer>>getFreeCells(){
+    public List<Pair<Integer,Integer>> getFreeCells(){
         List<Pair<Integer,Integer>> freeCells= new ArrayList<>();
         for(int i=0;i<size;i++ ){
-            for(int j=0;j<size();j++){
+            for(int j=0;j<size;j++){
                 if(board[i][j]==null){
                     freeCells.add(new Pair<>(i,j));
                 }
