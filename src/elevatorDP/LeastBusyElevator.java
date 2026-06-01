@@ -13,7 +13,7 @@ public class LeastBusyElevator implements ElevatorSelectionStrategy{
         for(ElevatorController controller:elevatorControllerList){
 
              int controllerSize=controller.downMaxPQ.size()+controller.upMinPQ.size();
-             if(size<=controllerSize){
+             if(size>=controllerSize){
                  bestController=controller;
                  size=controllerSize;
              }

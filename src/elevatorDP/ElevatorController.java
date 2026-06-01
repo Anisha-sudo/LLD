@@ -37,9 +37,9 @@ public class ElevatorController implements  Runnable {
             synchronized (monitor){
                 while(upMinPQ.isEmpty() && downMaxPQ.isEmpty()) {
                     try {
-                        System.out.println(elevator.ElevatorId);
+                        System.out.println("This elevator has no request::"+elevator.ElevatorId);
                         elevator.direction = Direction.IDLE;
-                        monitor.wait();
+                        monitor.wait();//sleep this thread
                     }catch(InterruptedException e){
                         Thread.currentThread().interrupt();
                     }

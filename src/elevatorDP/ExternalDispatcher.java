@@ -9,7 +9,6 @@ public class ExternalDispatcher {
     static List<ElevatorController>elevatorControllerList;
     static ElevatorSelectionStrategy elevatorSelectionStrategy;
     private ExternalDispatcher(){
-
     }
     static ExternalDispatcher externalDispatcher=null;
     public static ExternalDispatcher getExternalDispatcher(){
@@ -19,8 +18,10 @@ public class ExternalDispatcher {
         return externalDispatcher= new ExternalDispatcher();
 
     }
+
     public void allocateElevator(int floor,Direction direction){
         ElevatorController elevatorController=elevatorSelectionStrategy.getElevatorController(floor,direction,elevatorControllerList);
+        System.out.println("best Elevator Selected is "+elevatorController.elevator.ElevatorId);
         elevatorController.requestStop(floor);
     }
 }
