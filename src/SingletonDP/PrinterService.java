@@ -8,9 +8,14 @@ public class PrinterService {
     }
 
     public static PrinterService getInstance(){
-        //create static method because it can be accessed directly without obj of class;
+     //added double lock and synchronized for multi threading.
         if(printerServiceObj==null){
-            return printerServiceObj=new PrinterService();
+            //create static method because it can be accessed directly without obj of class;
+            synchronized(PrinterService.class) {
+                if (printerServiceObj == null) {
+                    return printerServiceObj = new PrinterService();
+                }
+            }
         }
         return printerServiceObj;
     }

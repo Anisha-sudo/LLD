@@ -10,6 +10,7 @@ public class Elevator {
     Elevator(int id,int currFloor){
         this.ElevatorId=id;
         this.currFloor=currFloor;
+        this.direction=Direction.IDLE;
     }
     public void move(int floor){
        nextFloorStoppage=floor;

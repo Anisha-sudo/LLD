@@ -4,7 +4,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 public class ElevatorController implements  Runnable {
     Elevator elevator;
-    private final Object monitor = new Object();
+    // private final Object monitor = new Object();
     PriorityBlockingQueue<Integer>upMinPQ;
     PriorityBlockingQueue<Integer>downMaxPQ;
     public ElevatorController(Elevator elevator)
@@ -21,8 +21,8 @@ public class ElevatorController implements  Runnable {
        }else if (destinationfloor<elevator.nextFloorStoppage && !downMaxPQ.contains(destinationfloor)){
            downMaxPQ.add(destinationfloor);
        }
-        synchronized (monitor) {
-            monitor.notify();   // wake elevator thread
+        synchronized (this) {
+        this.notify();   // wake elevator thread
         }
 
     }
@@ -34,12 +34,12 @@ public class ElevatorController implements  Runnable {
     public void runElevator(){
 
         while(true){
-            synchronized (monitor){
+            synchronized (this){
                 while(upMinPQ.isEmpty() && downMaxPQ.isEmpty()) {
                     try {
                         System.out.println("This elevator has no request::"+elevator.ElevatorId);
                         elevator.direction = Direction.IDLE;
-                        monitor.wait();//sleep this thread
+                        this.wait();//sleep this thread
                     }catch(InterruptedException e){
                         Thread.currentThread().interrupt();
                     }
