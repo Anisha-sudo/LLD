@@ -7,4 +7,7 @@ public class Movie {
     String movieName;
     List<Theatre> theatreList;
 
+    Movie (String movieName){
+        this.movieName=movieName;
+    }
 }
