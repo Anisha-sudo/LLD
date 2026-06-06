@@ -6,7 +6,7 @@ public class Theatre {
     //3dscreen,2dscreen etc
     public City city;
     String theatreName;
-    List<Screen> screenList;
+    public List<Screen> screenList;
     Theatre(City city,String name ,List<Screen>screenList){
         this.city=city;
         this.theatreName=name;

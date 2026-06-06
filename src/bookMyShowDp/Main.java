@@ -37,15 +37,45 @@ public class Main {
         Movie movie2 =new Movie("singham");
 
      ////////////show creation/////////////////////////////
-        Show show1=new Show(1, LocalDate.now(), LocalTime.now(),movie1,screen1,getSeats(100));
-        Show show2=new Show(1, LocalDate.now(), LocalTime.now(),movie2,screen2,getSeats(100));
+        Show show1=new Show(1, LocalDate.now(), LocalTime.now(),movie1,screen1);
+        Show show2=new Show(1, LocalDate.now(), LocalTime.now(),movie2,screen2);
 
-     ////////////////show attach to screen//////////////////
+     ////////////////show attach to screen/////////////////////////
         theatreController1.attachShowToScreen(screen1,show1);
         theatreController1.attachShowToScreen(screen2,show2);
 
-     //////create user//////////////////////////////////////
-        
+     //////create user//////////////////////////////////////////////
+        User user =new User(1,"Anisha");
+     /////get list of all movies in city and given date and time////
+       List<Movie>movieList=theatreController1.getMovies("BANGALORE",LocalDate.now());
+
+     /////////get all theatre by city and movie and date&time///////
+        List<Theatre>theatreList =theatreController1.getTheatreByCity("Bangalore",movieList.get(0).movieName,LocalDate.now());
+     for (Theatre t:theatreList){
+         System.out.println("available theatre are:"+t);
+     }
+     //////////////After user select thetre///////////////////////////
+
+        Theatre selectedTheatre = theatreList.get(0);
+        System.out.println("Selected Theatre: " + selectedTheatre.theatreName);
+
+     ///////show all shows available//////////////////////////////////
+
+        List<Show> listShows=theatreController1.getShows(selectedTheatre,movieList.get(0).movieName,LocalDate.now());
+        Show selectedShow=listShows.get(0);
+
+     //////user selects seats for selectedShow//////////////////
+
+     List<Integer> listSeatsSelected= List.of(1, 2, 3);
+        System.out.println("Selected Seats: " + listSeatsSelected);
+
+     /////////booking+payment////////////////////////////
+        BookingController bookingController =new BookingController();
+        bookingController.bookSeats(user,selectedShow,listSeatsSelected);
+
+
+
+
 
 
     }

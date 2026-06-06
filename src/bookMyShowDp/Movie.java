@@ -4,9 +4,7 @@ import java.util.List;
 
 public class Movie {
     //pvr,inox,vrbengaluru;
-    String movieName;
-    List<Theatre> theatreList;
-
+    public String movieName;
     Movie (String movieName){
         this.movieName=movieName;
     }

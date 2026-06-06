@@ -2,6 +2,7 @@ package bookMyShowDp;
 
 import java.sql.Array;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,7 @@ public class Screen {
    int screenSize;
    int screenCapacity;
     List<Seat> seatList;
-    Map<LocalTime,Show> timeShowMap;
+    public Map<LocalDate,Show> timeShowMap;
     Screen(int id,String screenType,int screensize,int screenCapacity,List<Seat> seatList){
       this.screenId=id;
       this.screenType=screenType;
@@ -23,6 +24,6 @@ public class Screen {
 
     }
     public void attachShow(Show show){
-        timeShowMap.put(LocalTime.now(), show);
+        timeShowMap.put(LocalDate.now(), show);
     }
 }

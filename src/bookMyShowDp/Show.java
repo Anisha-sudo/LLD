@@ -3,20 +3,59 @@ package bookMyShowDp;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Show {
     int showId;
-    Date showDate;
-    Time showTime;
-    Movie movie;
+    LocalDate showDate;
+    LocalTime showTime;
+    public Movie movie;
     Screen screen;
-    List<Seat> seatList;
+
+    Map<Integer,String> seatIdToStatusMap = new HashMap<>();
+    Map<Integer, ReentrantLock> seatIdToLockMap = new HashMap<>();
 
 
-    public Show(int i, LocalDate now, LocalTime now1, Movie movie, Screen screen1, List<Seat> seats) {
-        this.showId=showId;
+
+    public Show(int id, LocalDate date, LocalTime time, Movie movie, Screen screen) {
+        this.showId=id;
+        this.movie=movie;
+        this.showDate=date;
+        this.showTime=time;
+        this.screen=screen;
+        List<Seat>seatList=screen.seatList;
+        seatList.forEach(seat -> {
+            seatIdToStatusMap.put(seat.id,"AVAILABLE");
+            seatIdToLockMap.put(seat.id, new ReentrantLock());
+        });
+    }
+
+    public boolean lockSeats(List<Integer> seatIds){
+        Collections.sort(seatIds);
+        List<ReentrantLock> acquiredLock = new ArrayList<>();
+        try{
+        seatIds.forEach(id->{
+            seatIdToLockMap.get(id).lock();
+            acquiredLock.add(seatIdToLockMap.get(id));
+        });
+
+         for (int seatId:seatIds){
+             if (!seatIdToStatusMap.get(seatId).equals("AVAILABLE"))
+                 return false;
+
+         }
+
+         seatIds.forEach(id->{
+             seatIdToStatusMap.put(id,"LOCKED");
+         });
+         return true;
+        }finally{
+            acquiredLock.forEach(lock->{
+                lock.unlock();
+            });
+        }
+
 
     }
 }
