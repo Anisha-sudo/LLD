@@ -1,7 +1,7 @@
 package bookMyShowDp;
 
 public enum City {
-    BLR,
+    BANGALORE,
     MUMBAI,
     DELHI
 }

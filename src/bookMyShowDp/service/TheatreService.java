@@ -1,26 +1,18 @@
 package bookMyShowDp.service;
 
-import bookMyShowDp.Movie;
-import bookMyShowDp.Screen;
-import bookMyShowDp.Show;
-import bookMyShowDp.Theatre;
-
+import bookMyShowDp.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TheatreService {
-    Map<Enum,List<Theatre>> cityTheatreListMap;
+    Map<City,List<Theatre>> cityTheatreListMap=new HashMap<>();
 
-   public void addTheatre(List<Theatre> theatre){
-       for(Theatre t: theatre) {
-           cityTheatreListMap.put(t.city, Arrays.asList(t));
-       }
+    public void addTheatre(Theatre theatre) {
+        cityTheatreListMap
+                .computeIfAbsent(theatre.city, c -> new ArrayList<>())
+                .add(theatre);
     }
-    public List<Theatre> getTheatreByCity(String city, String movie, LocalDate time){
+    public List<Theatre> getTheatreByCity(City city, String movie, LocalDate time){
        List<Theatre>theatreForMovie = new ArrayList<>();
        List<Theatre> theatres= cityTheatreListMap.get(city);
        theatres.forEach(t ->{
@@ -34,7 +26,7 @@ public class TheatreService {
        return theatreForMovie;
     }
 
-    public List<Movie> getMovies(String city, LocalDate date){
+    public List<Movie> getMovies(City city, LocalDate date){
         List<Movie>allMovies = new ArrayList<>();
         List<Theatre> theatres= cityTheatreListMap.get(city);
         theatres.forEach(t ->{

@@ -32,21 +32,23 @@ public class Show {
     }
 
     public boolean lockSeats(List<Integer> seatIds){
-        Collections.sort(seatIds);
+        List<Integer> sorted = new ArrayList<>(seatIds);
+
+        //sorting i am doing to avoid deadlock scenario
+        Collections.sort(sorted);
         List<ReentrantLock> acquiredLock = new ArrayList<>();
         try{
-        seatIds.forEach(id->{
+            sorted.forEach(id->{
             seatIdToLockMap.get(id).lock();
             acquiredLock.add(seatIdToLockMap.get(id));
         });
 
-         for (int seatId:seatIds){
-             if (!seatIdToStatusMap.get(seatId).equals("AVAILABLE"))
-                 return false;
+            for (int seatId : sorted) {
+                if (!seatIdToStatusMap.get(seatId).equals("AVAILABLE"))
+                    return false; // this actually returns from lockSeats
+            }
 
-         }
-
-         seatIds.forEach(id->{
+            sorted.forEach(id->{
              seatIdToStatusMap.put(id,"LOCKED");
          });
          return true;
@@ -57,5 +59,15 @@ public class Show {
         }
 
 
+    }
+
+    public void rollbackSeats(List<Integer>seatList){
+        seatList.forEach(id->{
+            seatIdToStatusMap.put(id,"AVAILABLE");});
+    }
+
+    public void updateSeatStatusToBooked(List<Integer>seatList){
+        seatList.forEach(id->{
+            seatIdToStatusMap.put(id,"BOOKED");});
     }
 }

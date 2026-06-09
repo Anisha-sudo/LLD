@@ -1,5 +1,6 @@
 package bookMyShowDp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Theatre {
@@ -10,7 +11,7 @@ public class Theatre {
     Theatre(City city,String name ,List<Screen>screenList){
         this.city=city;
         this.theatreName=name;
-        this.screenList=screenList;
+        this.screenList= new ArrayList<>(screenList);
     }
     public void addScreen(Screen screen){
         screenList.add(screen);

@@ -1,15 +1,15 @@
-package bookMyShowDp;
+package bookMyShowDp.controller;
 
+import bookMyShowDp.*;
 import bookMyShowDp.service.TheatreService;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 public class TheatreController {
     TheatreService theatreService;
 
-    TheatreController(){
+    public TheatreController(){
         this.theatreService=new TheatreService();
     }
     public void addScreen(Theatre theatre,Screen screen){
@@ -17,17 +17,18 @@ public class TheatreController {
     }
 
     public void addTheatre(List<Theatre> theatrelist){
-        theatreService.addTheatre(theatrelist);
-
+        theatrelist.forEach(theatre -> {
+            theatreService.addTheatre(theatre);
+                });
     }
-    public void  attachShowToScreen(Screen screen,Show show){
+    public void  attachShowToScreen(Screen screen, Show show){
         screen.attachShow(show);
     }
-    public List<Theatre> getTheatreByCity(String city, String movie, LocalDate time){
+    public List<Theatre> getTheatreByCity(City city, String movie, LocalDate time){
         return theatreService.getTheatreByCity(city,movie,time);
     }
 
-    public List<Movie> getMovies(String city, LocalDate date){
+    public List<Movie> getMovies(City city, LocalDate date){
               return theatreService.getMovies(city,date);
     }
 

@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class Screen {
    int screenSize;
    int screenCapacity;
     List<Seat> seatList;
-    public Map<LocalDate,Show> timeShowMap;
+    public Map<LocalDate,Show> timeShowMap=new HashMap<>();
     Screen(int id,String screenType,int screensize,int screenCapacity,List<Seat> seatList){
       this.screenId=id;
       this.screenType=screenType;

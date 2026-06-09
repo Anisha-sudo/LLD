@@ -1,6 +1,7 @@
 package bookMyShowDp;
 
-import java.sql.Time;
+import bookMyShowDp.controller.BookingController;
+import bookMyShowDp.controller.TheatreController;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class Main {
         Screen screen1=new Screen(1,"2D",500,50,getSeats(50));
         Screen screen2=new Screen(2,"3D",400,30,getSeats(30));
 
-        Theatre theatre1 = new Theatre(City.BLR,"PVR",Arrays.asList(screen1));
-        Theatre theatre2 = new Theatre(City.BLR,"INOX",Arrays.asList(screen1,screen2));
+        Theatre theatre1 = new Theatre(City.BANGALORE,"PVR",Arrays.asList(screen1));
+        Theatre theatre2 = new Theatre(City.BANGALORE,"INOX",Arrays.asList(screen1,screen2));
         Theatre theatre3 = new Theatre(City.DELHI,"PVR",Arrays.asList(screen1,screen2));
         Theatre theatre4= new Theatre(City.DELHI,"INOX",Arrays.asList(screen1,screen2));
         Theatre theatre5= new Theatre(City.MUMBAI,"PVR",Arrays.asList(screen1,screen2));
@@ -47,10 +48,10 @@ public class Main {
      //////create user//////////////////////////////////////////////
         User user =new User(1,"Anisha");
      /////get list of all movies in city and given date and time////
-       List<Movie>movieList=theatreController1.getMovies("BANGALORE",LocalDate.now());
+       List<Movie>movieList=theatreController1.getMovies(City.BANGALORE,LocalDate.now());
 
      /////////get all theatre by city and movie and date&time///////
-        List<Theatre>theatreList =theatreController1.getTheatreByCity("Bangalore",movieList.get(0).movieName,LocalDate.now());
+        List<Theatre>theatreList =theatreController1.getTheatreByCity(City.BANGALORE,movieList.get(0).movieName,LocalDate.now());
      for (Theatre t:theatreList){
          System.out.println("available theatre are:"+t);
      }
@@ -71,13 +72,10 @@ public class Main {
 
      /////////booking+payment////////////////////////////
         BookingController bookingController =new BookingController();
-        bookingController.bookSeats(user,selectedShow,listSeatsSelected);
+        Booking booking=bookingController.bookSeats(user,selectedShow,listSeatsSelected);
 
-
-
-
-
-
+        System.out.println("BOOKING SUCCESSFUL");
+        System.out.println("Booking ID: " + booking.bookingId);
     }
 
 }
