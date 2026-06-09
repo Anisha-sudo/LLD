@@ -12,6 +12,13 @@ public class TheatreService {
                 .computeIfAbsent(theatre.city, c -> new ArrayList<>())
                 .add(theatre);
     }
+    public void addTheatre1(Theatre theatre){
+        cityTheatreListMap.computeIfAbsent(theatre.city,c->new ArrayList<>()).add(theatre);
+        //both ways to inset into a map in java.
+        List<Theatre>th=cityTheatreListMap.getOrDefault(theatre.city,new ArrayList<>());
+        th.add(theatre);
+        cityTheatreListMap.put(theatre.city,th);
+    }
     public List<Theatre> getTheatreByCity(City city, String movie, LocalDate time){
        List<Theatre>theatreForMovie = new ArrayList<>();
        List<Theatre> theatres= cityTheatreListMap.get(city);

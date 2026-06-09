@@ -38,10 +38,13 @@ public class Show {
         Collections.sort(sorted);
         List<ReentrantLock> acquiredLock = new ArrayList<>();
         try{
-            sorted.forEach(id->{
-            seatIdToLockMap.get(id).lock();
-            acquiredLock.add(seatIdToLockMap.get(id));
-        });
+            for(int id :seatIds) {
+                if (seatIdToLockMap.get(id).tryLock()) {
+                    acquiredLock.add(seatIdToLockMap.get(id));
+                } else {
+                    return false;
+                }
+            }
 
             for (int seatId : sorted) {
                 if (!seatIdToStatusMap.get(seatId).equals("AVAILABLE"))
