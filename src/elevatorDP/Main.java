@@ -20,6 +20,8 @@ public class Main {
 
         ExternalDispatcher.elevatorControllerList=new ArrayList<>(List.of(elevatorController1,elevatorController2));
         ExternalDispatcher.elevatorSelectionStrategy=new LeastBusyElevator();
+        InternalButton internalButton =new InternalButton(elevatorController1);
+        internalButton.press(6,Direction.UP);
         ExternalButton externalButton =new ExternalButton();
         externalButton.press(5,Direction.UP);
         externalButton.press(8,Direction.UP);
