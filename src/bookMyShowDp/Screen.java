@@ -9,13 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Screen {
+public class Screen extends HashMap{
     int screenId;
    String screenType;
    int screenSize;
    int screenCapacity;
     List<Seat> seatList;
     public Map<LocalDate,Show> timeShowMap=new HashMap<>();
+    public boolean containsKey(Object key){
+        return false;
+    }
     Screen(int id,String screenType,int screensize,int screenCapacity,List<Seat> seatList){
       this.screenId=id;
       this.screenType=screenType;
