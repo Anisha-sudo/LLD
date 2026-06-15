@@ -8,14 +8,21 @@ public abstract class StudentBuilder {
     String course;
     List<String> subjects;
 
-    public void setName(String name) {
+    public  StudentBuilder setName(String name) {
         this.name = name;
+        return this;
     }
 
-    public void setRollno(int rollno) {
+    public StudentBuilder setRollno(int rollno) {
         this.rollno = rollno;
+        return this;
+    }
+    public StudentBuilder setCourse(String course){
+        this.course=course;
+        return this;
     }
     abstract public StudentBuilder setSubjects();
+
 
     public Student build(){
         return new Student(this);

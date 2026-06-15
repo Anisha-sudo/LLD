@@ -15,7 +15,7 @@ public class Student {
     }
 
     public String toString(){
-        return  this.name+this.course+this.rollno+this.subjects.get(0)+this.subjects.get(1);
+        return  "name::"+this.name+" ,course::"+this.course+" ,rollno::"+this.rollno+" ,subjects::"+this.subjects.get(0)+","+this.subjects.get(1);
     }
 
 }
