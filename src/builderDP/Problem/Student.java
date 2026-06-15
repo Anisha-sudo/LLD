@@ -15,7 +15,7 @@ public class Student {
     String emailId;
     int mobile;
     List<String> subjects=new ArrayList<>();
-
+    //for creating complex class object
     //many variables , one big constuctor can be an issue.
     // there can be multiple contructor and there is no way to have different construtor if signature is same but value is diff.
     //using builder helps create the object step by step:
