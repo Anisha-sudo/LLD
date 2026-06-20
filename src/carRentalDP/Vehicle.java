@@ -14,7 +14,7 @@ public class Vehicle {
          this.vehicleType=vehicleType;
          this.milege=milege;
          this.kmRun=kmRun;
-         this.status=status.AVAILABLE;
+         this.status=VehicleStatus.AVAILABLE;
          this.vehicleId=UUID.randomUUID();
 
     }

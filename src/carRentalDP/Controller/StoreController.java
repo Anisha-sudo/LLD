@@ -3,16 +3,18 @@ package carRentalDP.Controller;
 import carRentalDP.Location;
 import carRentalDP.Vehicle;
 import carRentalDP.service.StoreService;
+import carRentalDP.service.StoreServiceInterface;
+
 import java.util.List;
 
 public class StoreController {
     StoreController storeController;
-    StoreService storeService;
+    StoreServiceInterface storeService;
 
-    public  StoreController(StoreService storeService){
+    public  StoreController(StoreServiceInterface storeService){
         this.storeService=storeService;
     }
-    
+
     public void addVehicle(Location location,List<Vehicle>vehicleList) {
     vehicleList.forEach(vehicle->{
             storeService.addVehicle(location,vehicle);
@@ -23,6 +25,8 @@ public class StoreController {
             storeService.removeVehicle(location,vehicle);
         });
     }
+
+
     public List<Vehicle> getAvailableVehicle(Location location){
         return  storeService.getAvailableVehicle(location);
     }
