@@ -1,7 +1,10 @@
 package carRentalDP.Controller;
 
 import carRentalDP.Booking;
+import carRentalDP.User;
 import carRentalDP.service.BookingService;
+
+import java.util.UUID;
 
 public class BookingController {
     static volatile BookingController bookingController;
@@ -17,6 +20,12 @@ public class BookingController {
     }
 
     //initiate booking
+    public void doBooking(User user, UUID VehicleID){
+        bookingService.createBooking(user,VehicleID);
+    }
+    public void cancelBooking(UUID userid,UUID bookingid){
+        bookingService.cancelBooking(userid,bookingid);
+    }
 
 
 }
