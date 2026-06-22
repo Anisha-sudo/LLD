@@ -3,7 +3,7 @@ package carRentalDP;
 import carRentalDP.Controller.BookingController;
 import carRentalDP.Controller.StoreController;
 import carRentalDP.service.*;
-
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
@@ -33,15 +33,18 @@ public class Main {
         //User
         User user = new User( "Anisha", "anisha@gmail.com", "1234567890");
         //book vehicle
-        PaymentService paymentService = new PaymentService();
+        PaymentServiceInterface paymentService = new NetBankingPaymentService();
         BookingServiceInterface bookingService = new BookingService(delhistoreService,paymentService);
         BookingController bookingController = new BookingController(bookingService);
-        Booking  booking=bookingController.doBooking(user, vehicleId);
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate= LocalDate.now().plusDays(3);
+        Booking  booking=bookingController.doBooking(user, vehicleId,startDate,endDate);
         System.out.println(booking.bookingId.toString());
         System.out.println(booking.vehicle.vehicleId.toString());
         System.out.println(booking.user.userId.toString());
         System.out.println(booking.bookingStatus);
         System.out.println(booking.payment.paymentStatus);
+        System.out.println("Amount paid::"+booking.payment.amount);
 
 
 

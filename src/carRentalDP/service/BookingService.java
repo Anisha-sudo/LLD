@@ -4,12 +4,10 @@ package carRentalDP.service;
 
 import carRentalDP.*;
 import carRentalDP.Payment;
-
+import java.time.LocalDate;
 import java.util.*;
-
 import static carRentalDP.PaymentStatus.COMPLETED;
 import static carRentalDP.PaymentStatus.FAILED;
-import static java.lang.Thread.sleep;
 
 public class BookingService  implements BookingServiceInterface{
      Map<UUID,List<Booking>> userBookingMap;
@@ -21,11 +19,11 @@ public class BookingService  implements BookingServiceInterface{
          this.paymentService=paymentService;
      }
 
-     public Booking createBooking(User user, UUID vehicleId) {
+     public Booking createBooking(User user, UUID vehicleId, LocalDate startDate, LocalDate endDate) {
          Vehicle vehicle = storeService.bookVehicle(vehicleId, user);
-         Booking booking = new Booking(user, vehicle);
+         Booking booking = new Booking(user, vehicle,startDate,endDate);
          userBookingMap.computeIfAbsent(user.userId, c -> new ArrayList<>()).add(booking);
-         paymentService.chargeUser(user,booking,(Payment payment)->{
+         paymentService.chargeUser(user,booking,startDate,endDate,(Payment payment)->{
              if (payment.paymentStatus == COMPLETED) {
                  booking.bookingStatus = BookingStatus.COMPLETED;
                  booking.payment=payment;
@@ -34,8 +32,6 @@ public class BookingService  implements BookingServiceInterface{
                  booking.payment=payment;
              }
          });
-
-
 
  //        Payment payment = paymentService.chargeUser(user, booking);
 //   if (payment.paymentStatus.equals(PaymentStatus.FAILED)) {
