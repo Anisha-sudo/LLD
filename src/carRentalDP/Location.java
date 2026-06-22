@@ -7,7 +7,11 @@ public class Location {
     public  int pincode;
     String address;
 
-
+    public Location(String name,int pincode,String address){
+        this.name=name;
+        this.pincode=pincode;
+        this.address=address;
+    }
 
     @Override
     public int hashCode() {

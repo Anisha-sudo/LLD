@@ -14,12 +14,13 @@ public class BookingController {
         this.bookingService=bookingService;
     }
     //initiate booking
-    public void doBooking(User user, UUID VehicleID){
-        bookingService.createBooking(user,VehicleID);
+    public Booking doBooking(User user, UUID VehicleID){
+        return bookingService.createBooking(user,VehicleID);
     }
     public void cancelBooking(UUID userid,UUID bookingid){
         bookingService.cancelBooking(userid,bookingid);
     }
+
 
 
 }

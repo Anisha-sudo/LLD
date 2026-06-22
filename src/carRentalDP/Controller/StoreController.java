@@ -5,30 +5,39 @@ import carRentalDP.Vehicle;
 import carRentalDP.service.StoreService;
 import carRentalDP.service.StoreServiceInterface;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StoreController {
-    StoreController storeController;
-    StoreServiceInterface storeService;
 
-    public  StoreController(StoreServiceInterface storeService){
-        this.storeService=storeService;
+    Map<Location,StoreServiceInterface>locationStoreMap;
+
+    public  StoreController(Map<Location,StoreServiceInterface>locationStoreMp){
+        locationStoreMap=new HashMap<>();
+        locationStoreMap.putAll(locationStoreMp);
     }
 
-    public void addVehicle(Location location,List<Vehicle>vehicleList) {
-    vehicleList.forEach(vehicle->{
-            storeService.addVehicle(location,vehicle);
-    });
+    public void addVehicle(Location location,List<Vehicle>vehicleList,StoreService storeService) {
+
+      for(Vehicle v:vehicleList){
+          storeService.addVehicle(v);
+      }
     }
-    public void removeVehicle(Location location,List<Vehicle>vehicleList){
-        vehicleList.forEach(vehicle->{
-            storeService.removeVehicle(location,vehicle);
-        });
+    public void removeVehicle(Location location,List<Vehicle>vehicleList,StoreService storeService){
+
+        for(Vehicle v:vehicleList){
+            storeService.removeVehicle(v);
+        }
     }
 
 
     public List<Vehicle> getAvailableVehicle(Location location){
-        return  storeService.getAvailableVehicle(location);
+        StoreServiceInterface storeService = locationStoreMap.get(location);
+        List<Vehicle> vehicleList=new ArrayList<>();
+        vehicleList.addAll(storeService.getAvailableVehicle());
+        return vehicleList;
     }
 
 }

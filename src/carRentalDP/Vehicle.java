@@ -8,6 +8,7 @@ public class Vehicle {
     VehicleType vehicleType;
     int milege;
     int kmRun;
+
     public VehicleStatus status;
     public Vehicle(int vehicleNumber,VehicleType vehicleType,int milege,int kmRun){
          this.vehicleNumber=vehicleNumber;

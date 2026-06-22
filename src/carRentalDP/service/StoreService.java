@@ -7,57 +7,43 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class StoreService implements StoreServiceInterface{
 
-    Map<Location, List<Vehicle>> locationStoreList;
-    Map<UUID, VehicleStatus> vehicleStatusMap;
+
+    Map<UUID, Vehicle> vehicleMap;
     Map<UUID, ReentrantLock> vehicleLockMap;
 
     public StoreService(){
-        locationStoreList=new HashMap<>();
-        vehicleStatusMap=new HashMap<>();
+        vehicleMap=new HashMap<>();
         vehicleLockMap=new HashMap<>();
     }
-    public void addVehicle(Location location, Vehicle vehicle) {
-        locationStoreList.computeIfAbsent(location, c -> new ArrayList<>()).add(vehicle);
-        vehicleStatusMap.put(vehicle.vehicleId, VehicleStatus.AVAILABLE);
+    public void addVehicle( Vehicle vehicle) {
+        vehicleMap.put(vehicle.vehicleId, vehicle);
         vehicleLockMap.put(vehicle.vehicleId, new ReentrantLock());
     }
 
-    public void removeVehicle(Location location, Vehicle vehicle) {
-        locationStoreList.get(location).remove(vehicle);
-        vehicleStatusMap.remove(vehicle.vehicleId);
+    public void removeVehicle(Vehicle vehicle) {
+        vehicleMap.remove(vehicle.vehicleId);
         vehicleLockMap.remove(vehicle.vehicleId);
     }
 
-    public List<Vehicle> getAvailableVehicle(Location location) {
+    public List<Vehicle> getAvailableVehicle() {
         List<Vehicle> vehicleListAns=new ArrayList<>();
-        List<Vehicle> vehicleList = locationStoreList.get(location);
-        for (Vehicle vl : vehicleList) {
-            if (vl.status.equals(VehicleStatus.AVAILABLE)) {
-                vehicleListAns.add(vl);
-            }
-        }
+       for(Map.Entry<UUID, Vehicle> mp :vehicleMap.entrySet()){
+           if(mp.getValue().status == VehicleStatus.AVAILABLE){
+               vehicleListAns.add(mp.getValue());
+           }
+       }
         return vehicleListAns;
     }
 
-    public Booking bookVehicle(UUID vehicleID, User user) {
+    public Vehicle bookVehicle(UUID vehicleID, User user) {
         ReentrantLock lock = vehicleLockMap.get(vehicleID);
         List<ReentrantLock>acquiredLocks=new ArrayList<>();
         try {
             if(lock.tryLock()) {
                 acquiredLocks.add(lock);
-                if (vehicleStatusMap.get(vehicleID).equals(VehicleStatus.AVAILABLE)) {
-                    vehicleStatusMap.put(vehicleID, VehicleStatus.UNAVAILABLE);
-
-                    for (Map.Entry<Location, List<Vehicle>> entry : locationStoreList.entrySet()) {
-                        for (Vehicle vehicle : entry.getValue()) {
-                            if (vehicle.vehicleId.equals(vehicleID)) {
-                                vehicle.status = VehicleStatus.UNAVAILABLE;
-                                return new Booking(user, vehicle);
-                            }
-                        }
-                    }
-
-                    throw new RuntimeException("Vehicle is not available");
+                if (vehicleMap.get(vehicleID).status.equals(VehicleStatus.AVAILABLE)) {
+                     vehicleMap.get(vehicleID).status=VehicleStatus.UNAVAILABLE;
+                     return vehicleMap.get(vehicleID);
                 } else {
                     throw new RuntimeException("Vehicle is not available");
                 }
@@ -79,15 +65,9 @@ public class StoreService implements StoreServiceInterface{
             if(lock.tryLock()) {
                     acquiredLocks.add(lock);
 
-                    if (vehicleStatusMap.get(vehicle.vehicleId).equals(VehicleStatus.UNAVAILABLE)) {
-                        vehicleStatusMap.put(vehicle.vehicleId, VehicleStatus.AVAILABLE);
-                        for (Map.Entry<Location, List<Vehicle>> entry : locationStoreList.entrySet()) {
-                            for (Vehicle v : entry.getValue()) {
-                                if (v.vehicleId.equals(vehicle.vehicleId)) {
-                                    v.status = VehicleStatus.AVAILABLE;
-                                }
-                            }
-                        }
+                    if (vehicleMap.get(vehicle.vehicleId).status.equals(VehicleStatus.UNAVAILABLE)) {
+                        vehicleMap.get(vehicle.vehicleId).status=VehicleStatus.AVAILABLE;
+
                     } else {
                         throw new RuntimeException("booking can't be cancelled.");
                     }

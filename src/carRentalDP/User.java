@@ -7,7 +7,10 @@ public class User {
     String name;
     String email;
     String phoneNumber;
-     public  User(){
+     public  User(String username, String email, String phoneNumber) {
          this.userId=UUID.randomUUID();
+         this.name=username;
+         this.email=email;
+         this.phoneNumber=phoneNumber;
      }
 }
