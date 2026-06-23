@@ -1,12 +1,13 @@
 package ticktacktoeDP;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 import java.util.Scanner;
 
 public class Game {
 
-    Deque<Player> players;
+    Deque<Player> players = new ArrayDeque<>();
     Board board;
 
     public Game(){
@@ -39,7 +40,7 @@ public class Game {
                 continue;
             }
 
-            System.out.println("Player :" +playerTurn.name +"Enter row,col: ");
+            System.out.println("Player :" +playerTurn.name +" \nEnter row,col: ");
             Scanner sc= new Scanner(System.in);
             String s= sc.nextLine();
             String[] values =s.split(",");
@@ -64,6 +65,31 @@ public class Game {
     }
 
     boolean isThereWinner(int x,int y, Symbol symbol){
-        return false;
+       boolean isRowMatch=true;
+       boolean isColMatch=true;
+       boolean isLeftDiagonalMatch=true;
+       boolean isRightDiagonalMatch=true;
+
+       for(int i=0;i<board.size;i++){
+           if(board.board[i][x]!=symbol || board.board[i][y]==null){
+               isRowMatch=false;
+           }
+       }
+        for(int i=0;i<board.size;i++){
+            if(board.board[y][i]!=symbol || board.board[y][i]==null){
+                isColMatch=false;
+            }
+        }
+        for(int i=0,j=0;i<board.size;i++,j++){
+            if(board.board[i][j]!=symbol || board.board[i][j]==null){
+                isLeftDiagonalMatch=false;
+            }
+        }
+        for(int i=0,j=board.size-1;i<board.size;i++,j--){
+            if(board.board[i][j]!=symbol || board.board[i][j]==null){
+                isRightDiagonalMatch=false;
+            }
+        }
+        return isRowMatch || isColMatch || isLeftDiagonalMatch || isRightDiagonalMatch;
     }
 }

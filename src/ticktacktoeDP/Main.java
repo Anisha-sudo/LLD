@@ -2,9 +2,9 @@ package ticktacktoeDP;
 
 public class Main {
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Game game =new Game();
-        game.startGame();
+        System.out.println(game.startGame());
     }
 
 

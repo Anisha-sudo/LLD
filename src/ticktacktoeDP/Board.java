@@ -1,12 +1,10 @@
 package ticktacktoeDP;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
     int size;
-    Symbol symbol;
     public Symbol[][]board;
 
     public Board(int size){
