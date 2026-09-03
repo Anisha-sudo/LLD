@@ -17,6 +17,7 @@ public class Screen extends HashMap{
     List<Seat> seatList;
     public Map<LocalDate,Show> timeShowMap=new HashMap<>();
     public boolean containsKey(Object key){
+
         return false;
     }
     Screen(int id,String screenType,int screensize,int screenCapacity,List<Seat> seatList){
@@ -28,6 +29,7 @@ public class Screen extends HashMap{
 
     }
     public void attachShow(Show show){
+
         timeShowMap.put(LocalDate.now(), show);
     }
 }

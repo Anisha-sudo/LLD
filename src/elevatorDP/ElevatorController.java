@@ -50,6 +50,7 @@ public class ElevatorController implements  Runnable {
              int floor=upMinPQ.poll();
              elevator.move(floor);
             }
+
             while (!downMaxPQ.isEmpty()){
                 int floor=downMaxPQ.poll();
                 elevator.move(floor);

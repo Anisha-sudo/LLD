@@ -15,10 +15,6 @@ public class Client {
         books.add(book3);
         Library lib= new Library(books);
         Iterator it=lib.createIterator();
-
-        //whichever thing we want to iterate we should have object of that and we should have iterator for that
-        //iterators are used to traverse the collection of objects,and for each object we want to perform some operation
-        //like hasNext() and next() are methods of iterator interface
         BookIterator dataType=new BookIterator(books);
         dataType.hasNext();
         dataType.next();
@@ -28,5 +24,18 @@ public class Client {
             System.out.println(book.getName());
         }
 
+
+                ArrayList<String> fruits = new ArrayList<>();
+
+                fruits.add("Apple");
+                fruits.add("Banana");
+                fruits.add("Orange");
+
+                Iterator<String> iterator = fruits.iterator();
+
+                while (iterator.hasNext()) {
+                    String fruit = iterator.next();
+                    System.out.println(fruit);
+                }
     }
 }
